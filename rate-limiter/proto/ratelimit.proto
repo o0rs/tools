@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package ratelimit.v1;
+
+option go_package = "rate-limiter/pb";
+
+// RateLimitService provides rate limiting capabilities via gRPC.
+service RateLimitService {
+  // Allow checks whether a request should be allowed based on rate limiting rules.
+  rpc Allow(AllowRequest) returns (AllowResponse);
+}
+
+// AllowRequest is the input for a rate limit check.
+message AllowRequest {
+  // key identifies the rate limit target (e.g., user ID, API key, IP address).
+  string key = 1;
+  // tokens is the number of tokens/requests to consume (default: 1).
+  int32 tokens = 2;
+  // algorithm specifies which rate limiting algorithm to use.
+  // Supported: "token_bucket", "leaky_bucket", "sliding_window".
+  string algorithm = 3;
+}
+
+// AllowResponse contains the result of a rate limit check.
+message AllowResponse {
+  // allowed indicates whether the request was permitted.
+  bool allowed = 1;
+  // remaining shows the number of remaining tokens/capacity.
+  int32 remaining = 2;
+  // retry_after_ms indicates how long to wait before retrying (in milliseconds).
+  double retry_after_ms = 3;
+  // message provides a human-readable status description.
+  string message = 4;
+}

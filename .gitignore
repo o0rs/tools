@@ -1,6 +1,6 @@
 # IDE
-.idea
-.vscode
+.idea/
+.vscode/
 
 # Rust / Cargo
 debug/
@@ -8,7 +8,17 @@ target/
 Cargo.lock
 
 # Go
-rate-limiter/bin/
+.gocache/
+bin/
+*.test
+coverage.out
+cover.out
+*.prof
+*.pprof
+*.coverprofile
+go.work.sum
+
+# Generated Go sources
 rate-limiter/pb/*.pb.go
 
 # Python
